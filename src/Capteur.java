@@ -1,5 +1,5 @@
 public interface Capteur {
-    void attache(ObserverDeCapteur o);
+    void attach(ObserverDeCapteurAsync o);
     int getValue();
     void tick();
 }

@@ -15,8 +15,7 @@ public class FutureImpl<T> implements Future {
     }
 
 	@Override
-	public void setDone() {
-		
-		
+	public void setDone(boolean done) {
+		this.done=done;
 	}
 }

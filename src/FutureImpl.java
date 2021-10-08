@@ -1,12 +1,11 @@
-public class FutureImpl<T> implements Future {
+public class FutureImpl<T> implements Future<T> {
 	T value;
 	boolean done=false;
 	
-	
-	
+
     @Override
-    public Object get() {
-        return null;
+    public T get() {
+        return value;
     }
 
     @Override
@@ -17,5 +16,11 @@ public class FutureImpl<T> implements Future {
 	@Override
 	public void setDone(boolean done) {
 		this.done=done;
+	}
+
+	@Override
+	public void setValue(T val) {
+		this.value=val;
+		setDone(true);
 	}
 }

@@ -1,4 +1,9 @@
-public class FutureImpl implements Future{
+public class FutureImpl<T> implements Future {
+	T value;
+	boolean done=false;
+	
+	
+	
     @Override
     public Object get() {
         return null;
@@ -6,6 +11,6 @@ public class FutureImpl implements Future{
 
     @Override
     public boolean isDone() {
-        return false;
+        return done;
     }
 }

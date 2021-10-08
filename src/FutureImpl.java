@@ -13,4 +13,10 @@ public class FutureImpl<T> implements Future {
     public boolean isDone() {
         return done;
     }
+
+	@Override
+	public void setDone() {
+		
+		
+	}
 }

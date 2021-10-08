@@ -1,6 +1,8 @@
 public interface Future<T> {
-	void setDone();
+	void setDone(boolean isdone);
+	boolean isDone();
+	
 	
     T get();
-    boolean isDone();
+	void setValue(T val);
 }

@@ -7,6 +7,7 @@ public class Canal implements ObserverDeCapteurAsync{
     public Future update(Capteur s) {
     	
     	Update u=new Update();
+    	u.canal = this;
     	Future f=Main.scheduler.enqueue(u);
     	
         return f;

@@ -9,6 +9,7 @@ public class Scheduler {
     ScheduledExecutorService serviceScheduled = Executors.newScheduledThreadPool(1);
     
     public Future enqueue(Update m){
+        //System.out.println("Scheduled");
         return serviceScheduled.schedule(m, Main.timeDelay, TimeUnit.SECONDS);
     }
 

@@ -20,7 +20,7 @@ public class Main {
 		
 		while(capteur.compteur<6) {
 			capteur.tick();
-			Thread.sleep(1000);
+			Thread.sleep(1500);
 		}
 	}
 

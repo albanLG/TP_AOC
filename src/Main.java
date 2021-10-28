@@ -1,4 +1,7 @@
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 
 public class Main {
@@ -7,7 +10,7 @@ public class Main {
 	static List<ObserverDeCapteurAsync> observers=new ArrayList<ObserverDeCapteurAsync>();
 	static Long timeDelay=0L;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		observers.add(new Canal());
 		observers.add(new Canal());
 		observers.add(new Canal());
@@ -15,7 +18,10 @@ public class Main {
 
 		capteur.observers=observers;
 		
-		capteur.updateAll();
+		while(capteur.compteur<6) {
+			capteur.tick();
+			Thread.sleep(1000);
+		}
 	}
 
 }

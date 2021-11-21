@@ -11,10 +11,10 @@ public class Main {
 	static Long timeDelay=0L;
 
 	public static void main(String[] args) throws InterruptedException {
-		observers.add(new Canal());
-		observers.add(new Canal());
-		observers.add(new Canal());
-		observers.add(new Canal());
+		observers.add(new Canal(capteur));
+		observers.add(new Canal(capteur));
+		observers.add(new Canal(capteur));
+		observers.add(new Canal(capteur));
 
 		capteur.observers=observers;
 		

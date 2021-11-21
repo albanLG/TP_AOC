@@ -1,11 +1,9 @@
-import java.util.concurrent.Callable;
-
-public class Update implements MethodInvocation, Callable<String>{
+public class Update implements MethodInvocation, Runnable{
 	Canal canal;
 	
 	@Override 
-	public String call() throws Exception{
+	public void run(){
+		canal.affich.c=canal;
 		canal.affich.update();
-		return "yololo";
     }
 }

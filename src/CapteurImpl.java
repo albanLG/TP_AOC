@@ -25,7 +25,7 @@ public class CapteurImpl implements Capteur{
     
     public void updateAll() {
     	for(ObserverDeCapteurAsync obs: observers) {
-    		obs.update(this);
+    		obs.update();
     	}
     }
 }

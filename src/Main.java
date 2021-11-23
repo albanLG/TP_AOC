@@ -1,23 +1,20 @@
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.ArrayList;
-
 public class Main {
-	static Scheduler scheduler=new Scheduler();
-	static CapteurImpl capteur=new CapteurImpl();
-	static List<ObserverDeCapteurAsync> observers=new ArrayList<ObserverDeCapteurAsync>();
 	static Long timeDelay=0L;
 
 	public static void main(String[] args) throws InterruptedException {
-		observers.add(new Canal(capteur));
-		observers.add(new Canal(capteur));
-		observers.add(new Canal(capteur));
-		observers.add(new Canal(capteur));
-
-		capteur.observers=observers;
+		Scheduler scheduler=new Scheduler();
+		CapteurImpl capteur=new CapteurImpl();
 		
+		ObserverDeCapteur afficheur1 = new Afficheur();
+        ObserverDeCapteur afficheur2 = new Afficheur();
+        ObserverDeCapteur afficheur3 = new Afficheur();
+        ObserverDeCapteur afficheur4 = new Afficheur();
+		
+		capteur.attach(new Canal(capteur,scheduler,afficheur1));
+		capteur.attach(new Canal(capteur,scheduler,afficheur2));
+		capteur.attach(new Canal(capteur,scheduler,afficheur3));
+		capteur.attach(new Canal(capteur,scheduler,afficheur4));
+
 		while(capteur.compteur<6) {
 			capteur.tick();
 			Thread.sleep(1500);

@@ -1,3 +1,3 @@
 public interface ObserverDeCapteur {
-    void update();
+    void update(Canal c);
 }

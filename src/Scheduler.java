@@ -7,15 +7,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
-    ScheduledExecutorService serviceScheduled = Executors.newScheduledThreadPool(1);
+	//il faut strict minimum 2 pools, un pour le update, l autre pour le getValue
+    ScheduledExecutorService serviceScheduled = Executors.newScheduledThreadPool(8);
     
-    public Future enqueue(Callable m){
+    public Future enqueue(Callable<Integer> m){
         return serviceScheduled.schedule(m, Main.timeDelay, TimeUnit.SECONDS);
     }
     public Future enqueue(Runnable m){
         return serviceScheduled.schedule(m, Main.timeDelay, TimeUnit.SECONDS);
     }
-    
-    public void setValue(Future f){}//a quoi sert cette fonction?
     
 }

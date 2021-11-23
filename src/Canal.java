@@ -1,25 +1,29 @@
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 public class Canal implements ObserverDeCapteurAsync{
-	Afficheur affich=new Afficheur();
+	Scheduler scheduler;
+	ObserverDeCapteur affich;
 	Capteur capt;
 	
-	public Canal(Capteur c) {
+	public Canal(Capteur c, Scheduler schedul, ObserverDeCapteur afficheur) {
+		Objects.requireNonNull(c);
+        Objects.requireNonNull(schedul);
+        Objects.requireNonNull(afficheur);
 		this.capt=c;
+		this.scheduler=schedul;
+		this.affich=afficheur;
 	}
 	
     @Override
     public Future update() {
-    	Update u=new Update();
-    	u.canal = this;
-    	
-        return Main.scheduler.enqueue(u);
+    	Update u=new Update(this);	
+        return this.scheduler.enqueue(u);
     }
+    
     @Override
     public Future getValue() {
-    	GetValue gv=new GetValue();
-    	gv.canal=this;
-    	
-    	return Main.scheduler.enqueue(gv);
+    	GetValue gv=new GetValue(this);   	
+    	return this.scheduler.enqueue(gv);
     }
 }

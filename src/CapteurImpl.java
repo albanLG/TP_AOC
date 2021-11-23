@@ -1,16 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class CapteurImpl implements Capteur{
 	Scheduler sheduler;
-	List<ObserverDeCapteurAsync> observers=new ArrayList<ObserverDeCapteurAsync>();
+	private Set<ObserverDeCapteurAsync> observers;
 	int compteur=0;
 	
-    @Override
-    public void attach(ObserverDeCapteurAsync o) {
-    	observers.add(o);
-    	
+	
+	public CapteurImpl()
+    {
+        this.observers = new LinkedHashSet<>();
     }
+	
+	
+    @Override
+    public void attach(ObserverDeCapteurAsync o) {observers.add(o);}
 
     @Override
     public int getValue() {
@@ -21,6 +26,12 @@ public class CapteurImpl implements Capteur{
     public void tick() {
     	compteur++;
     	updateAll();
+    }
+    
+    //Renvoie les observeurs. On en aura besoin dans les algorithmes de diffusion.
+    public Set<ObserverDeCapteurAsync> getObservers()
+    {
+        return Collections.unmodifiableSet(this.observers);
     }
     
     public void updateAll() {

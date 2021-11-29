@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import algoDiffusion.AlgorithmeDiffusion;
-import algoDiffusion.AlgorithmeEpoque;
+import algoDiffusion.DiffusionEpoque;
 
 public class CapteurImpl implements Capteur{
 	Scheduler sheduler;
@@ -30,7 +30,7 @@ public class CapteurImpl implements Capteur{
 
     @Override
     public int getValue() {
-    	if(algoDiff instanceof AlgorithmeEpoque) {//si on utilise l algorithme par epoque, on renvoie la valeur tel quel, on ne cherche pas a avoir la meme valeur pour tous
+    	if(algoDiff instanceof DiffusionEpoque) {//si on utilise l algorithme par epoque, on renvoie la valeur tel quel, on ne cherche pas a avoir la meme valeur pour tous
     		return compteur;
     	}
     	return lockedValue;
@@ -39,7 +39,12 @@ public class CapteurImpl implements Capteur{
     @Override
     public void tick() {
     	compteur++;
-    	algoDiff.diffuse();
+    	try {
+			algoDiff.diffuse();
+		} 
+    	catch (InterruptedException e) {
+			System.out.println("Tick error !");
+		}
     }
     
     //Renvoie les observeurs. On en aura besoin dans les algorithmes de diffusion.
@@ -47,4 +52,16 @@ public class CapteurImpl implements Capteur{
     {
         return Collections.unmodifiableSet(this.observers);
     }
+
+
+	@Override
+	public void updateLockedValue() {
+		lockedValue=compteur;
+	}
+
+
+	@Override
+	public void releaseSemaphore() {
+		algoDiff.releaseSemaphore();
+	}
 }

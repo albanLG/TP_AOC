@@ -3,7 +3,7 @@ package algoDiffusion;
 import Elements.Capteur;
 import Elements.ObserverDeCapteurAsync;
 
-public class AlgorithmeEpoque implements AlgorithmeDiffusion {
+public class DiffusionEpoque implements AlgorithmeDiffusion {
 	Capteur capteur;
 	
 	@Override
@@ -16,6 +16,11 @@ public class AlgorithmeEpoque implements AlgorithmeDiffusion {
 		for(ObserverDeCapteurAsync obs: capteur.getObservers()) {
     		obs.update();
     	}
+	}
+
+	@Override
+	public void releaseSemaphore() {
+		//Pas besoin de semaphore pour la diffusion par epoque
 	}
 
 }

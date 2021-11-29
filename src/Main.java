@@ -4,13 +4,14 @@ import Elements.CapteurImpl;
 import Elements.ObserverDeCapteur;
 import Elements.Scheduler;
 import algoDiffusion.AlgorithmeDiffusion;
-import algoDiffusion.AlgorithmeEpoque;
+import algoDiffusion.DiffusionEpoque;
+import algoDiffusion.DiffusionSequentielle;
 
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		Scheduler scheduler=new Scheduler();
-		AlgorithmeDiffusion algo= new AlgorithmeEpoque();
+		AlgorithmeDiffusion algo= new DiffusionSequentielle();
 		CapteurImpl capteur=new CapteurImpl(algo);
 		
 		ObserverDeCapteur afficheur1 = new Afficheur();

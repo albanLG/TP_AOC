@@ -9,4 +9,8 @@ public interface Capteur {
     void tick();
     
     Set<ObserverDeCapteurAsync> getObservers();
+    
+    void updateLockedValue();
+    
+    void releaseSemaphore();
 }

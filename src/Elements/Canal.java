@@ -1,3 +1,4 @@
+package Elements;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
@@ -16,13 +17,13 @@ public class Canal implements ObserverDeCapteurAsync{
 	}
 	
     @Override
-    public Future update() {
+    public Future<?> update() {
     	Update u=new Update(this);	
         return this.scheduler.enqueue(u);
     }
     
     @Override
-    public Future getValue() {
+    public Future<Integer> getValue() {
     	GetValue gv=new GetValue(this);   	
     	return this.scheduler.enqueue(gv);
     }

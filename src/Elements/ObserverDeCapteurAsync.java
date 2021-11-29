@@ -1,6 +1,7 @@
+package Elements;
 import java.util.concurrent.Future;
 
 public interface ObserverDeCapteurAsync {
-    Future update();
-    Future getValue();
+    Future<?> update();
+    Future<Integer> getValue();
 }

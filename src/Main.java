@@ -1,9 +1,17 @@
+import Elements.Afficheur;
+import Elements.Canal;
+import Elements.CapteurImpl;
+import Elements.ObserverDeCapteur;
+import Elements.Scheduler;
+import algoDiffusion.AlgorithmeDiffusion;
+import algoDiffusion.AlgorithmeEpoque;
+
 public class Main {
-	static Long timeDelay=0L;
 
 	public static void main(String[] args) throws InterruptedException {
 		Scheduler scheduler=new Scheduler();
-		CapteurImpl capteur=new CapteurImpl();
+		AlgorithmeDiffusion algo= new AlgorithmeEpoque();
+		CapteurImpl capteur=new CapteurImpl(algo);
 		
 		ObserverDeCapteur afficheur1 = new Afficheur();
         ObserverDeCapteur afficheur2 = new Afficheur();
@@ -17,8 +25,11 @@ public class Main {
 
 		while(capteur.compteur<6) {
 			capteur.tick();
-			Thread.sleep(1500);
+			Thread.sleep(1);
 		}
+		
+		scheduler.waitAndFinished();
+		
 	}
 
 }

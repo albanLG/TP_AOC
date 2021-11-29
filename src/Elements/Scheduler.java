@@ -6,16 +6,16 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
-	Long timeDelay=0L;
+	Long timeDelay;
 	
 	//il faut strict minimum 2 pools, un pour le update, l autre pour le getValue
     ScheduledExecutorService serviceScheduled = Executors.newScheduledThreadPool(20);
     
     public Future<Integer> enqueue(Callable<Integer> m){
-        return serviceScheduled.schedule(m, timeDelay, TimeUnit.SECONDS);
+        return serviceScheduled.schedule(m, timeDelay, TimeUnit.MILLISECONDS);
     }
     public Future<?> enqueue(Runnable m){
-        return serviceScheduled.schedule(m, timeDelay, TimeUnit.SECONDS);
+        return serviceScheduled.schedule(m, timeDelay, TimeUnit.MILLISECONDS);
     }
     
     public void waitAndFinished() {
@@ -25,5 +25,9 @@ public class Scheduler {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    public void setDelay(Long d) {
+    	this.timeDelay=d;
     }
 }

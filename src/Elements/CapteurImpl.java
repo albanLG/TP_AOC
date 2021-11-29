@@ -21,7 +21,6 @@ public class CapteurImpl implements Capteur{
     {
         this.observers = new LinkedHashSet<>();
         this.algoDiff=alg;
-        this.algoDiff.configure(this);
     }
 	
 	
@@ -33,6 +32,7 @@ public class CapteurImpl implements Capteur{
     	if(algoDiff instanceof DiffusionEpoque) {//si on utilise l algorithme par epoque, on renvoie la valeur tel quel, on ne cherche pas a avoir la meme valeur pour tous
     		return compteur;
     	}
+    	algoDiff.releaseSemaphore();//tick termine un afficheur, on libere une unite du semaphore
     	return lockedValue;
     }
 
@@ -57,11 +57,5 @@ public class CapteurImpl implements Capteur{
 	@Override
 	public void updateLockedValue() {
 		lockedValue=compteur;
-	}
-
-
-	@Override
-	public void releaseSemaphore() {
-		algoDiff.releaseSemaphore();
 	}
 }

@@ -12,9 +12,6 @@ public class Afficheur implements ObserverDeCapteur{
     	try
         {
     		data=f2.get();
-    		
-    		c.releaseSemaphore();//tick termine pour cet afficheur, on libere une unite du semaphore
-    		
     		System.out.println(data);
     		
         }catch (Exception e){

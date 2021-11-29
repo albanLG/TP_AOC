@@ -27,9 +27,4 @@ public class Canal implements ObserverDeCapteurAsync{
     	GetValue gv=new GetValue(this);   	
     	return this.scheduler.enqueue(gv);
     }
-
-	@Override
-	public void releaseSemaphore() {
-		capt.releaseSemaphore();
-	}
 }

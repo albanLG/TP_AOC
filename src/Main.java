@@ -11,6 +11,9 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		Scheduler scheduler=new Scheduler();
+		//On peut ajouter du delai pour voir que la diffusion sequentielle bloque certaines valeurs
+		scheduler.setDelay(1L);
+		
 		AlgorithmeDiffusion algo= new DiffusionSequentielle();
 		CapteurImpl capteur=new CapteurImpl(algo);
 		
@@ -23,10 +26,13 @@ public class Main {
 		capteur.attach(new Canal(capteur,scheduler,afficheur2));
 		capteur.attach(new Canal(capteur,scheduler,afficheur3));
 		capteur.attach(new Canal(capteur,scheduler,afficheur4));
-
+		
+		//on configure la diffusion une fois que les canaux sont crees (car on a besoin d eux pour la config.)
+		algo.configure(capteur);
+		
 		while(capteur.compteur<6) {
 			capteur.tick();
-			Thread.sleep(1);
+			Thread.sleep(2);
 		}
 		
 		scheduler.waitAndFinished();

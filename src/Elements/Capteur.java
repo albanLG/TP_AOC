@@ -11,6 +11,4 @@ public interface Capteur {
     Set<ObserverDeCapteurAsync> getObservers();
     
     void updateLockedValue();
-    
-    void releaseSemaphore();
 }

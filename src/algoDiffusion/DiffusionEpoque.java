@@ -13,6 +13,9 @@ public class DiffusionEpoque implements AlgorithmeDiffusion {
 	
 	@Override
 	public void diffuse() {
+		//On diffuse sans bloquer le thread principale et on n utilise pas la lockedValue,
+		//ce qui veut dire qu il peut y avoir un tick pile au moment ou j update mes afficheurs.
+		//Donc il y aura des afficheurs avec la valeur i et les autres avec la valeur i+1
 		for(ObserverDeCapteurAsync obs: capteur.getObservers()) {
     		obs.update();
     	}

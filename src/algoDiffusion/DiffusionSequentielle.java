@@ -18,7 +18,8 @@ public class DiffusionSequentielle implements AlgorithmeDiffusion {
 	
 	@Override
 	public void diffuse() throws InterruptedException {
-		//on update uniquement si tous les observateurs sont prets (s il y en a qui update tjrs, alors on rentre pas)
+		//Si il n y a pas assez de permission dispo, alors on ne diffuse pas
+		//Le thread principale quand à lui n est pas bloque donc les afficheurs vont tous rater qqvaleurs
 		
 		if (semaphore.availablePermits() == this.capteur.getObservers().size()){
 			

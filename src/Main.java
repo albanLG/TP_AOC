@@ -2,8 +2,10 @@ import Elements.Afficheur;
 import Elements.Canal;
 import Elements.CapteurImpl;
 import Elements.ObserverDeCapteur;
+import Elements.ObserverDeCapteurAsync;
 import Elements.Scheduler;
 import algoDiffusion.AlgorithmeDiffusion;
+import algoDiffusion.DiffusionAtomique;
 import algoDiffusion.DiffusionEpoque;
 import algoDiffusion.DiffusionSequentielle;
 
@@ -12,7 +14,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		Scheduler scheduler=new Scheduler();
 		//On peut ajouter du delai pour voir que la diffusion sequentielle bloque certaines valeurs
-		scheduler.setDelay(1L);
+		scheduler.setDelay(2L);
 		
 		AlgorithmeDiffusion algo= new DiffusionSequentielle();
 		CapteurImpl capteur=new CapteurImpl(algo);
@@ -32,11 +34,15 @@ public class Main {
 		
 		while(capteur.compteur<6) {
 			capteur.tick();
-			Thread.sleep(2);
+			Thread.sleep(3);
 		}
 		
 		scheduler.waitAndFinished();
 		
+		//on affiche les afficheurs :O
+		for(ObserverDeCapteurAsync o : capteur.getObservers()) {
+			System.out.println(o.getAfficheur().getValues());
+		}
 	}
 
 }

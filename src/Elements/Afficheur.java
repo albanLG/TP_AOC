@@ -1,21 +1,31 @@
 package Elements;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
 
 public class Afficheur implements ObserverDeCapteur{
-	int data;
+	int max=-1;
+	List<Integer> values=new ArrayList<Integer>();
 	
     @Override
     public void update(Canal c) {
-        //System.out.println("new value: ");
         //il faut appeller la methode getValue du canal en mode bloquant
     	Future<Integer> f2= c.getValue();
     	try
         {
-    		data=f2.get();
-    		System.out.println(data);
+    		int data=f2.get();
+    		if(max<=data) {
+    			values.add(data);
+    			max=data;
+    		}
     		
         }catch (Exception e){
         	System.out.println("Doesn't work ...");
         }
     }
+
+	@Override
+	public List<Integer> getValues() {
+		return values;
+	}
 }

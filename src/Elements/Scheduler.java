@@ -20,7 +20,7 @@ public class Scheduler {
     
     public void waitAndFinished() {
     	try {
-			serviceScheduled.awaitTermination(2, TimeUnit.SECONDS);
+			serviceScheduled.awaitTermination(3, TimeUnit.SECONDS);
 			serviceScheduled.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();

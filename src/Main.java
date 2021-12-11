@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 import Elements.Afficheur;
 import Elements.Canal;
 import Elements.CapteurImpl;
@@ -12,9 +14,7 @@ import algoDiffusion.DiffusionSequentielle;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		Scheduler scheduler=new Scheduler();
-		//On peut ajouter du delai pour voir que la diffusion sequentielle bloque certaines valeurs
-		scheduler.setDelay(2L);
+		Scheduler scheduler=new Scheduler(8L);
 		
 		AlgorithmeDiffusion algo= new DiffusionSequentielle();
 		CapteurImpl capteur=new CapteurImpl(algo);
@@ -32,9 +32,11 @@ public class Main {
 		//on configure la diffusion une fois que les canaux sont crees (car on a besoin d eux pour la config.)
 		algo.configure(capteur);
 		
+		enableRendering();
+		
 		while(capteur.compteur<6) {
 			capteur.tick();
-			Thread.sleep(3);
+			Thread.sleep(10);
 		}
 		
 		scheduler.waitAndFinished();
@@ -43,6 +45,13 @@ public class Main {
 		for(ObserverDeCapteurAsync o : capteur.getObservers()) {
 			System.out.println(o.getAfficheur().getValues());
 		}
+	}
+	
+	public static void enableRendering() {
+		JFrame f=new JFrame();
+		f.setSize(400,500);//400 width and 500 height  
+		f.setLayout(null);//using no layout managers  
+		f.setVisible(true);//making the frame visible  
 	}
 
 }

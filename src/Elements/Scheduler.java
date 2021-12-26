@@ -33,7 +33,11 @@ public class Scheduler {
 			e.printStackTrace();
 		}
     }
-    
+    /**
+     * Allows to randomly generate a long between 0 and MAX_DELAY
+     *
+     * @return a randomly generated long
+     */
     private long getRandomDelay()
     {
         return (long) (Math.random() * delayMax);

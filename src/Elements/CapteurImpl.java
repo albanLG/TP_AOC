@@ -6,7 +6,12 @@ import java.util.Set;
 
 import algoDiffusion.AlgorithmeDiffusion;
 import algoDiffusion.DiffusionEpoque;
-
+/**
+ * CapteurImpl is the class who implement Capteur
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
 public class CapteurImpl implements Capteur{
 	Scheduler sheduler;
 	

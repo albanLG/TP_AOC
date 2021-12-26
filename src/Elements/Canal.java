@@ -3,14 +3,14 @@ import java.util.Objects;
 import java.util.concurrent.Future;
 
 public class Canal implements ObserverDeCapteurAsync{
-	Scheduler scheduler;
-	ObserverDeCapteur affich;
-	Capteur capt;
+	private Scheduler scheduler;
+	private ObserverDeCapteur affich;
+	private Capteur capt;
 	
 	public Canal(Capteur c, Scheduler schedul, ObserverDeCapteur afficheur) {
-		Objects.requireNonNull(c);
-        Objects.requireNonNull(schedul);
-        Objects.requireNonNull(afficheur);
+		Objects.requireNonNull(c,"Le capteur ne doit pas etre null");
+        Objects.requireNonNull(schedul,"Le scheduler ne doit pas etre null");
+        Objects.requireNonNull(afficheur,"L'afficheur ne doit pas etre null");
 		this.capt=c;
 		this.scheduler=schedul;
 		this.affich=afficheur;
@@ -32,4 +32,8 @@ public class Canal implements ObserverDeCapteurAsync{
 	public ObserverDeCapteur getAfficheur() {
     	return affich;
     }
+
+	public Capteur getCapt() {
+		return capt;
+	}
 }

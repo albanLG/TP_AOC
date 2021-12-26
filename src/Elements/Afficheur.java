@@ -1,11 +1,12 @@
 package Elements;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
 public class Afficheur implements ObserverDeCapteur{
-	int max=-1;
-	List<Integer> values=new ArrayList<Integer>();
+	private int max=-1;
+	private List<Integer> values=new ArrayList<Integer>();
 	
     @Override
     public void update(Canal c) {
@@ -13,7 +14,7 @@ public class Afficheur implements ObserverDeCapteur{
     	Future<Integer> f2= c.getValue();
     	try
         {
-    		int data=f2.get();
+    		int data=f2.get();//appel bloquant
     		if(max<=data) {
     			values.add(data);
     			max=data;
@@ -26,6 +27,6 @@ public class Afficheur implements ObserverDeCapteur{
 
 	@Override
 	public List<Integer> getValues() {
-		return values;
+		return Collections.unmodifiableList(values);
 	}
 }

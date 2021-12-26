@@ -2,7 +2,7 @@ package Elements;
 import java.util.concurrent.Callable;
 
 public class GetValue implements Callable<Integer>{
-	Canal canal;
+	private Canal canal;
 
 	public GetValue(Canal c) {
 		this.canal=c;
@@ -10,7 +10,8 @@ public class GetValue implements Callable<Integer>{
 	
 	@Override
 	public Integer call() {
-		return canal.capt.getValue();
+		Capteur capt=canal.getCapt();
+		return capt.getValue();
 	}
 
 }

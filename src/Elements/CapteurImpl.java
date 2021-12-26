@@ -1,6 +1,7 @@
 package Elements;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import algoDiffusion.AlgorithmeDiffusion;
@@ -9,28 +10,32 @@ import algoDiffusion.DiffusionEpoque;
 public class CapteurImpl implements Capteur{
 	Scheduler sheduler;
 	
-	public Set<ObserverDeCapteurAsync> observers;
+	private Set<ObserverDeCapteurAsync> observers;
 	
-	public int compteur=0;				//la valeur du compteur
-	int lockedValue=compteur;	//la valeur du compteur qui est cense etre lu par tous les canaux avant d etre update
+	private int compteur=0;				//la valeur du compteur
+	private int lockedValue=getCompteur();	//la valeur du compteur qui est cense etre lu par tous les canaux avant d etre update
 	
 	AlgorithmeDiffusion algoDiff;
 	
 	
 	public CapteurImpl(AlgorithmeDiffusion alg)
     {
+		Objects.requireNonNull(alg, "L'algorithme de diffusion ne doit pas etre null");
         this.observers = new LinkedHashSet<>();
         this.algoDiff=alg;
     }
 	
 	
     @Override
-    public void attach(ObserverDeCapteurAsync o) {observers.add(o);}
+    public void attach(ObserverDeCapteurAsync o) {
+    	Objects.requireNonNull(o, "Le canal ne doit pas etre null");
+    	observers.add(o);
+    }
 
     @Override
     public int getValue() {
     	if(algoDiff instanceof DiffusionEpoque) {//si on utilise l algorithme par epoque, on renvoie la valeur tel quel, on ne cherche pas a avoir la meme valeur pour tous
-    		return compteur;
+    		return getCompteur();
     	}
     	algoDiff.releaseSemaphore();//tick termine un afficheur, on libere une unite du semaphore
     	return lockedValue;
@@ -38,7 +43,7 @@ public class CapteurImpl implements Capteur{
 
     @Override
     public void tick() {
-    	compteur++;
+    	compteur = getCompteur() + 1;
     	try {
 			algoDiff.diffuse();
 		} 
@@ -56,6 +61,11 @@ public class CapteurImpl implements Capteur{
 
 	@Override
 	public void updateLockedValue() {
-		lockedValue=compteur;
+		lockedValue=getCompteur();
+	}
+
+
+	public int getCompteur() {
+		return compteur;
 	}
 }

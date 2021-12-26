@@ -1,6 +1,6 @@
 package Elements;
 public class Update implements Runnable{
-	Canal canal;
+	private Canal canal;
 	
 	public Update(Canal c) {
 		this.canal=c;
@@ -8,6 +8,7 @@ public class Update implements Runnable{
 	
 	@Override 
 	public void run(){
-		canal.affich.update(canal);
+		ObserverDeCapteur affich=canal.getAfficheur();
+		affich.update(canal);
     }
 }

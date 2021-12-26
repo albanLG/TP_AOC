@@ -1,5 +1,5 @@
 package Elements;
-public class Update implements MethodInvocation, Runnable{
+public class Update implements Runnable{
 	Canal canal;
 	
 	public Update(Canal c) {

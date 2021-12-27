@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 /**
  * Canal is the class who distribute the value
  *
- * @author LEGOFF Alban, MA Qian
+ * @author LE GOFF Alban, MA Qian
  * @version 1
  */
 public class Canal implements ObserverDeCapteurAsync{

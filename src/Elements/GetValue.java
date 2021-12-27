@@ -2,9 +2,9 @@ package Elements;
 import java.util.concurrent.Callable;
 
 /**
- * Affcheur is the class who recieve the value
+ * Afficheur is the class who receive the value
  *
- * @author LEGOFF Alban, MA Qian
+ * @author LE GOFF Alban, MA Qian
  * @version 1
  */
 public class GetValue implements Callable<Integer>{

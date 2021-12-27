@@ -9,7 +9,7 @@ import algoDiffusion.DiffusionEpoque;
 /**
  * CapteurImpl is the class who implement Capteur
  *
- * @author LEGOFF Alban, MA Qian
+ * @author LE GOFF Alban, MA Qian
  * @version 1
  */
 public class CapteurImpl implements Capteur{

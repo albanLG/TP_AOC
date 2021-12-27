@@ -8,7 +8,7 @@ import Elements.ObserverDeCapteurAsync;
 /**
  * DiffusionAtomique is the class who distribute the value by using Atomic methode.
  *
- * @author LEGOFF Alban, MA Qian
+ * @author LE GOFF Alban, MA Qian
  * @version 1
  */
 

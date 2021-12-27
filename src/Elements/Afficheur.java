@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 /**
- * Affcheur is the class who recieve the value
+ * Afficheur is the class who receive the value
  *
- * @author LEGOFF Alban, MA Qian
+ * @author LE GOFF Alban, MA Qian
  * @version 1
  */
 

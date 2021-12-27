@@ -43,7 +43,7 @@ public class CapteurImpl implements Capteur{
 
     @Override
     public void tick() {
-    	compteur = getCompteur() + 1;
+    	compteur = compteur + 1;
     	try {
 			algoDiff.diffuse();
 		} 

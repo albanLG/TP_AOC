@@ -1,68 +1,145 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import Elements.*;
 import algoDiffusion.*;
 
 public class Tests {
+	private Scheduler scheduler;
 	private ObserverDeCapteur afficheur1;
     private ObserverDeCapteur afficheur2;
     private ObserverDeCapteur afficheur3;
     private ObserverDeCapteur afficheur4;
 
-    //@BeforeEach
+    @BeforeEach
     public void generateAfficheur()
     {
+    	this.scheduler=new Scheduler(8L);
         this.afficheur1 = new Afficheur();
         this.afficheur2 = new Afficheur();
         this.afficheur3 = new Afficheur();
         this.afficheur4 = new Afficheur();
     }
 
-    //@Test
-    //@DisplayName("Test oracle algorithme atomique")
-    void Oracle_Algorithme_Atomique() throws InterruptedException
+    @Test
+    void Algorithme_Atomique() throws InterruptedException
     {
-       
-        /*AlgorithmeDiffusion algorithmeDiffusion = new DiffusionAtomique();
-        Capteur capteur = CapteurImpl.create(algorithmeDiffusion);
-        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(8);
-        ObserverDeCapteurAsync canal1 = CanalImpl.create(scheduledExecutorService, this.afficheur1);
-        ObserverDeCapteurAsync canal2 = CanalImpl.create(scheduledExecutorService, this.afficheur2);
-        ObserverDeCapteurAsync canal3 = CanalImpl.create(scheduledExecutorService, this.afficheur3);
-        ObserverDeCapteurAsync canal4 = CanalImpl.create(scheduledExecutorService, this.afficheur4);
-        capteur.attach(canal1);
-        capteur.attach(canal2);
-        capteur.attach(canal3);
-        capteur.attach(canal4);
-        algorithmeDiffusion.configure(capteur);
-        int tickNumber = 7;
-
-        for (int i = 0; i < tickNumber; ++i)
+    	AlgorithmeDiffusion algo= new DiffusionAtomique();
+		CapteurImpl capteur=new CapteurImpl(algo);
+		
+		capteur.attach(new Canal(capteur,scheduler,afficheur1));
+		capteur.attach(new Canal(capteur,scheduler,afficheur2));
+		capteur.attach(new Canal(capteur,scheduler,afficheur3));
+		capteur.attach(new Canal(capteur,scheduler,afficheur4));
+		
+        algo.configure(capteur);
+        
+        int numbTick = 6;
+        for (int i = 0; i < numbTick; ++i)
         {
             capteur.tick();
         }
-        scheduledExecutorService.awaitTermination(10, TimeUnit.SECONDS);
-        scheduledExecutorService.shutdown();
-        int minimumDataCount = minimumDataCountAfficheurs(
-                List.of(this.afficheur1, this.afficheur2, this.afficheur3, this.afficheur4));
-        List<Integer> dataAfficheur1 = this.afficheur1.getData();
-        List<Integer> dataAfficheur2 = this.afficheur1.getData();
-        List<Integer> dataAfficheur3 = this.afficheur1.getData();
-        List<Integer> dataAfficheur4 = this.afficheur1.getData();
-        // Au cas ou le capteur ne commence pas a 0
-        int firstValue = dataAfficheur1.get(0);
+        
+        scheduler.waitAndFinished();
+        
+        List<Integer> data1 = this.afficheur1.getValues();
+        List<Integer> data2 = this.afficheur2.getValues();
+        List<Integer> data3 = this.afficheur3.getValues();
+        List<Integer> data4 = this.afficheur4.getValues();
 
-        for (int i = 0; i < minimumDataCount; ++i)
+        //ici, on verifie que chaque afficheur ai toutes les valeurs et dans l'ordre
+        for (int i = 0; i < numbTick; ++i)
         {
-            assertEquals(dataAfficheur1.get(i), firstValue + i);
-            assertEquals(dataAfficheur2.get(i), firstValue + i);
-            assertEquals(dataAfficheur3.get(i), firstValue + i);
-            assertEquals(dataAfficheur4.get(i), firstValue + i);
+            assertEquals(data1.get(i), i+1);
+            assertEquals(data2.get(i), i+1);
+            assertEquals(data3.get(i), i+1);
+            assertEquals(data4.get(i), i+1);
         }
-        displayAfficheursDatas(List.of(dataAfficheur1, dataAfficheur2, dataAfficheur3, dataAfficheur4),
-                minimumDataCount);*/
+    }
+    
+    @Test
+    void Algorithme_Sequentielle() throws InterruptedException
+    {
+    	AlgorithmeDiffusion algo= new DiffusionSequentielle();
+		CapteurImpl capteur=new CapteurImpl(algo);
+		
+		capteur.attach(new Canal(capteur,scheduler,afficheur1));
+		capteur.attach(new Canal(capteur,scheduler,afficheur2));
+		capteur.attach(new Canal(capteur,scheduler,afficheur3));
+		capteur.attach(new Canal(capteur,scheduler,afficheur4));
+		
+        algo.configure(capteur);
+        
+        int numbTick = 6;
+        for (int i = 0; i < numbTick; ++i)
+        {
+            capteur.tick();
+        }
+        
+        scheduler.waitAndFinished();
+        
+        List<Integer> data1 = this.afficheur1.getValues();
+        List<Integer> data2 = this.afficheur2.getValues();
+        List<Integer> data3 = this.afficheur3.getValues();
+        List<Integer> data4 = this.afficheur4.getValues();
+
+        //d abord, on verifie qu ils aient la meme taille
+        int length=data1.size();
+        assertTrue(length == data2.size());
+        assertTrue(length == data3.size());
+        assertTrue(length == data4.size());
+        
+        //en suite on verifie que les afficheurs aient les memes elements.
+        //En revanche, on ne verifie pas qu ils aient toutes les valeurs etant donnee que c est du sequentielle.
+        for (int i = 0; i < length; ++i)
+        {
+            int value=data1.get(i);
+            assertEquals(data2.get(i), value);
+            assertEquals(data3.get(i), value);
+            assertEquals(data4.get(i), value);
+            
+            //on verifie egalement que les valeurs soient dans l ordre croissant
+            if(i>0) {
+            	assertTrue(data1.get(i-1)<=value);
+            }
+        }
+    }
+    
+    @Test
+    void Algorithme_Epoque() throws InterruptedException
+    {
+    	AlgorithmeDiffusion algo= new DiffusionEpoque();
+		CapteurImpl capteur=new CapteurImpl(algo);
+		
+		capteur.attach(new Canal(capteur,scheduler,afficheur1));
+		capteur.attach(new Canal(capteur,scheduler,afficheur2));
+		capteur.attach(new Canal(capteur,scheduler,afficheur3));
+		capteur.attach(new Canal(capteur,scheduler,afficheur4));
+		
+        algo.configure(capteur);
+        
+        int numbTick = 6;
+        for (int i = 0; i < numbTick; ++i)
+        {
+            capteur.tick();
+        }
+        
+        scheduler.waitAndFinished();
+        
+        List<List<Integer>> datas = List.of(afficheur1.getValues(), afficheur2.getValues(),
+        		afficheur3.getValues(), afficheur4.getValues());
+        
+        //On verifie juste que les elements soient dans l ordre croissant
+        for(List<Integer> data : datas) {
+	        for (int i = 1; i < data.size(); ++i)
+	        {
+	            assertTrue(data.get(i-1)<=data.get(i));
+	        }
+    	}
     }
 }

@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		Scheduler scheduler=new Scheduler(8L);
 		
-		AlgorithmeDiffusion algo= new DiffusionSequentielle();
+		AlgorithmeDiffusion algo= new DiffusionEpoque();
 		CapteurImpl capteur=new CapteurImpl(algo);
 		
 		ObserverDeCapteur afficheur1 = new Afficheur();

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface Capteur {
     /**
-     * Allows you to link an asynchronous capteur observer (channel) to the sensor, by adding the observer to the observer set.
+     * Allows to link an asynchronous capteur observer (channel) to the sensor, by adding the observer to the observer set.
      *
      * @param o is a Observer of capteur in asynchronous mode (non null)
      * @throws NullPointerException if the observer is null
@@ -20,7 +20,7 @@ public interface Capteur {
 
 
     /**
-     * Allows you to obtain the counter value of the cqpteur
+     * Allows to obtain the counter value of the capteur
      *
      * @return Integer an Integer containing the value of the capteur
      */

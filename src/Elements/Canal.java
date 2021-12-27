@@ -2,6 +2,12 @@ package Elements;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
+/**
+ * Canal is the class who distribute the value
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
 public class Canal implements ObserverDeCapteurAsync{
 	private Scheduler scheduler;
 	private ObserverDeCapteur affich;
@@ -21,7 +27,7 @@ public class Canal implements ObserverDeCapteurAsync{
     	Update u=new Update(this);	
         return this.scheduler.enqueue(u);
     }
-    
+
     @Override
     public Future<Integer> getValue() {
     	GetValue gv=new GetValue(this);   	

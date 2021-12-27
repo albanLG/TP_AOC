@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
+/**
+ * Affcheur is the class who recieve the value
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
 
 public class Afficheur implements ObserverDeCapteur{
 	private int max=-1;

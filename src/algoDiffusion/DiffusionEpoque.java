@@ -3,6 +3,13 @@ package algoDiffusion;
 import Elements.Capteur;
 import Elements.ObserverDeCapteurAsync;
 
+/**
+ * DiffusionEpoque is the class who distribute the value by using epoque(period) methode.
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
+
 public class DiffusionEpoque implements AlgorithmeDiffusion {
 	Capteur capteur;
 	

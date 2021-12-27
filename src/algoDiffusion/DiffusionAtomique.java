@@ -5,6 +5,13 @@ import java.util.concurrent.Semaphore;
 import Elements.Capteur;
 import Elements.ObserverDeCapteurAsync;
 
+/**
+ * DiffusionAtomique is the class who distribute the value by using Atomic methode.
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
+
 public class DiffusionAtomique implements AlgorithmeDiffusion {
 	Capteur capteur;
 	Semaphore semaphore;

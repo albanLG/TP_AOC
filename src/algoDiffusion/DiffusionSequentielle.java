@@ -5,6 +5,14 @@ import java.util.concurrent.Semaphore;
 import Elements.Capteur;
 import Elements.ObserverDeCapteurAsync;
 
+/**
+ * DiffusionSeauentielle is the class who distribute the value by using sequential methode.
+ *
+ * @author LEGOFF Alban, MA Qian
+ * @version 1
+ */
+
+
 public class DiffusionSequentielle implements AlgorithmeDiffusion {
 	Capteur capteur;
 	Semaphore semaphore;
